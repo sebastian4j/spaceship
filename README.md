@@ -1,6 +1,6 @@
 # Spaceship
 
-- Es una aplicación escrita Java 17, JavaFX y compilable con GraalVM para una ejecución nativa.
+- Es una aplicación escrita en Java 17, JavaFX y compilable con GraalVM para una ejecución nativa.
 - Permite hacer peticiones a urls y visualizar la respuesta.
 - La idea nació del excesivo consumo que generaba Postman y solo necesitaba hacer un simple request para ver la respuesta.
 - La versión inicial permite lo siguiente: 
