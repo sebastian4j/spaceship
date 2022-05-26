@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestTabController">
+   <top>
+      <VBox spacing="2.0">
+         <BorderPane.margin>
+            <Insets top="2.0" />
+         </BorderPane.margin>
+         <children>
+            <FlowPane hgap="5.0" prefHeight="30.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ComboBox fx:id="methods" prefHeight="24.0" prefWidth="82.0" />
+                  <TextField fx:id="url" prefHeight="24.0" prefWidth="526.0" />
+                  <Button fx:id="send" mnemonicParsing="false" onAction="#sendRequest" prefHeight="24.0" prefWidth="102.0" text="%url.search" />
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </FlowPane>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab fx:id="tab1" text="%tab1">
+               <content>
+                  <AnchorPane>
+                     <children>
+                        <TextArea fx:id="requestbody" layoutX="-3.0" layoutY="-7.0" prefHeight="455.0" prefWidth="744.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tab2" text="%tab2">
+               <content>
+                  <AnchorPane>
+                     <children>
+                        <TextArea fx:id="bodyresult" editable="false" layoutX="-3.0" layoutY="-4.0" prefHeight="448.0" prefWidth="746.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="%tab3">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <VBox fx:id="containerHeader" />
+                           </content>
+                        </ScrollPane>
+                     </center>
+                  </BorderPane>
+               </content>
+               <graphic>
+                  <Button fx:id="addHeader" mnemonicParsing="false" onAction="#addHeader" text="%add.header" />
+               </graphic>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

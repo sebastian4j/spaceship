@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestController">
+   <children>
+
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="%menu.file">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#newTab" text="%file.new" />
+                  <MenuItem mnemonicParsing="false" onAction="#fileSaveAs" text="%file.save.as" />
+                  <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="%file.open" />
+                  <MenuItem mnemonicParsing="false" onAction="#closeTab" text="%file.close.tab" />
+                  <MenuItem mnemonicParsing="false" onAction="#fileClose" text="%menu.file.close" />
+               </items>
+            </Menu>
+         </menus>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </MenuBar>
+
+
+      <TabPane fx:id="tabPane" prefHeight="537.0" prefWidth="738.0" tabClosingPolicy="UNAVAILABLE">
+
+      </TabPane>
+   </children>
+</VBox>
