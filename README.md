@@ -27,7 +27,7 @@ java --module-path  target/spaceship-1.0.0.jar:target/lib/  --module com.github.
 ```
 export GRAALVM_HOME=$HOME/code/fx/graalvm-ce-java17-22.1.0/
 ```
-  - compilarlo:
+  - compilarlo nativo:
 ```
 mvn gluonfx:build
 ```
