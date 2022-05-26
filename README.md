@@ -37,4 +37,4 @@ mvn gluonfx:build
 - https://www.graalvm.org/
 
 ##### Sobre el nombre
-A mi hijo le gustan las cosas relacionadas con el espacio, así que esa es el principal motivo, también sirve como concepto para explicarle cómo viajan y llegan los datos la aplicación :smiley:
+A mi hijo le gustan las cosas relacionadas con el espacio, así que esa es el principal motivo, también sirve como concepto para explicarle cómo viajan y llegan los datos a la aplicación :smiley:
