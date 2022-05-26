@@ -1,4 +1,4 @@
-# Spaceship
+# Spaceship :space_invader:
 
 ![v1.0.0](https://github.com/sebastian4j/spaceship/blob/main/images/v1.0.0.png?raw=true)
 
@@ -35,3 +35,6 @@ mvn gluonfx:build
 ### Enlaces de interés
 - https://openjfx.io/
 - https://www.graalvm.org/
+
+##### Sobre el nombre
+A mi hijo le gustan las cosas relacionadas con el espacio, así que esa es el principal motivo, también sirve como concepto para explicarle cómo viajan y llegan los datos la aplicación :smiley:
