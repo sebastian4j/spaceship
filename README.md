@@ -10,10 +10,13 @@
   - ver el response
   - guardar los datos ingresados para la petición
   - recuperar los datos ingresados en la petición
-- Para lanzar la app:
+- Compilar la app:
 
 ```
 mvn clean package
+```
+- Lanzar la app:
+```
 java --module-path  target/spaceship-1.0.0.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Requester
 ```
 - Para compilarlo en forma nativa:
