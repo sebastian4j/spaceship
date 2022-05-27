@@ -3,10 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestController">
+<VBox fx:id="mainvbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestController">
    <children>
 
-      <MenuBar>
+      <MenuBar fx:id="menuBar">
          <menus>
             <Menu mnemonicParsing="false" text="%menu.file">
                <items>
@@ -24,7 +24,7 @@
       </MenuBar>
 
 
-      <TabPane fx:id="tabPane" prefHeight="537.0" prefWidth="738.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
 
       </TabPane>
    </children>
