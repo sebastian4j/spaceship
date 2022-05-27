@@ -1,4 +1,4 @@
-# Spaceship :space_invader:
+# Spaceship :rocket:
 
 ![v1.1.0](https://github.com/sebastian4j/spaceship/blob/main/images/v1.1.0.png?raw=true)
 
