@@ -10,6 +10,7 @@
   - agregar headers
   - enviar un body
   - ver el response
+  - ver los headers del response
   - guardar los datos ingresados para la petición
   - recuperar los datos ingresados en la petición
   - cancelar la petición solicitada
