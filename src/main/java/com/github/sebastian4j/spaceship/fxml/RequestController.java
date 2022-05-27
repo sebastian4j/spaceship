@@ -7,8 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -26,6 +28,11 @@ public class RequestController implements Initializable, Controller {
     private ResourceBundle bundle;
     private Map<Tab, FileLoader> tabsActivas;
     private File last;
+    @FXML
+    private VBox mainvbox;
+    @FXML
+    private MenuBar menuBar;
+
     @FXML
     private TabPane tabPane;
 
@@ -94,6 +101,7 @@ public class RequestController implements Initializable, Controller {
             tab.setContent(contenido.load());
             FileLoader controller = contenido.getController();
             tabsActivas.put(tab, controller);
+            controller.setStage(st);
         } catch (Exception e) {
             LOGGER.log(System.Logger.Level.ERROR, "error al cargar tab", e);
         }
@@ -110,13 +118,14 @@ public class RequestController implements Initializable, Controller {
     @Override
     public void setStage(Stage stage) {
         this.st = stage;
+        newTab(null);
+        mainvbox.heightProperty().addListener(cl -> tabPane.setMinHeight(mainvbox.getHeight() - menuBar.getHeight()));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.bundle = resourceBundle;
         tabsActivas = new LinkedHashMap<>();
-        newTab(null);
     }
 
 

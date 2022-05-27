@@ -1,15 +1,27 @@
 package com.github.sebastian4j.spaceship.utils;
 
+import com.github.sebastian4j.spaceship.dto.RequestResponse;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RequestResponseUtils {
-    public static String sendRequest(final String url, Map<String, String> headers, boolean withBody, final String body) {
+    private static String normalize(String url) {
+        var ret = url;
+        if (!url.startsWith("http")) {
+           ret = "http://" + url;
+        }
+        return ret;
+    }
+    public static RequestResponse sendRequest(final String url, Map<String, String> headers, boolean withBody, final String body) {
         String result = "";
+        Map<String, List<String>> hr = new HashMap<>();
         try {
-            var con = (HttpURLConnection) new URL(url).openConnection();
+            var con = (HttpURLConnection) new URL(normalize(url)).openConnection();
             headers.forEach((a, b) -> con.addRequestProperty(a, b));
             if (withBody) {
                 con.setDoOutput(withBody);
@@ -23,9 +35,10 @@ public class RequestResponseUtils {
                 }
                 result = sb.toString();
             }
+            hr.putAll(con.getHeaderFields());
         } catch (Exception e) {
             result = e.getMessage();
         }
-        return result;
+        return new RequestResponse(result, hr);
     }
 }

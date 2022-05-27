@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestTabController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="contenedor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestTabController">
    <top>
-      <VBox spacing="2.0">
+      <VBox fx:id="vboxurl" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="2.0">
          <BorderPane.margin>
             <Insets top="2.0" />
          </BorderPane.margin>
          <children>
-            <FlowPane hgap="5.0" prefHeight="30.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+            <FlowPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <children>
                   <ComboBox fx:id="methods" prefHeight="24.0" prefWidth="82.0" />
-                  <TextField fx:id="url" prefHeight="24.0" prefWidth="526.0" />
-                  <Button fx:id="send" mnemonicParsing="false" onAction="#sendRequest" prefHeight="24.0" prefWidth="102.0" text="%url.search" />
+                  <TextField fx:id="url" minHeight="24.0" minWidth="526.0" />
+                  <Button fx:id="send" minHeight="24.0" minWidth="102.0" mnemonicParsing="false" onAction="#sendRequest" text="%url.search" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -42,26 +54,13 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab2" text="%tab2">
-               <content>
-                  <AnchorPane>
-                     <children>
-                        <TextArea fx:id="bodyresult" editable="false" layoutX="-3.0" layoutY="-4.0" prefHeight="448.0" prefWidth="746.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </TextArea>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
             <Tab text="%tab3">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane maxWidth="1.7976931348623157E308">
                      <center>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <ScrollPane fx:id="scrollHeaders" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                            <content>
-                              <VBox fx:id="containerHeader" />
+                              <VBox fx:id="containerHeader" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                            </content>
                         </ScrollPane>
                      </center>
@@ -70,6 +69,44 @@
                <graphic>
                   <Button fx:id="addHeader" mnemonicParsing="false" onAction="#addHeader" text="%add.header" />
                </graphic>
+            </Tab>
+            <Tab fx:id="tab2" text="%tab2">
+               <content>
+                  <VBox fx:id="vboxResultResponse" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <TextArea fx:id="bodyresult" editable="false" layoutX="-3.0" layoutY="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextArea>
+                        <HBox fx:id="hboxResponse" alignment="CENTER_LEFT" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" spacing="10.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="%save.response" />
+                              <Text fx:id="textFlowPaneResponse" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="%tab.response.header">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                           <content>
+                              <VBox fx:id="containerHeaderResponse" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                           </content>
+                        </ScrollPane>
+                     </center>
+                  </BorderPane>
+               </content>
             </Tab>
          </tabs>
       </TabPane>

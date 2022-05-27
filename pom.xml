@@ -41,7 +41,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.github.sebastian4j.spaceship.Requester</mainClass>
+                    <mainClass>com.github.sebastian4j.spaceship.Spaceship</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -49,7 +49,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.github.sebastian4j.spaceship.Requester</mainClass>
+                    <mainClass>com.github.sebastian4j.spaceship.Spaceship</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -58,7 +58,7 @@
                 <version>1.0.7</version>
                 <configuration>
                     <enableSWRendering>true</enableSWRendering>
-                    <mainClass>com.github.sebastian4j.spaceship.Requester</mainClass>
+                    <mainClass>com.github.sebastian4j.spaceship.Spaceship</mainClass>
                     <nativeImageArgs>
                         <nativeImageArg>-H:IncludeResources="*fxml$"</nativeImageArg>
                         <nativeImageArg>-H:IncludeResources="*properties$"</nativeImageArg>

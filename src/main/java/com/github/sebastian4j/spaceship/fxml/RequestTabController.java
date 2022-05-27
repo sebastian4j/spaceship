@@ -1,19 +1,24 @@
 package com.github.sebastian4j.spaceship.fxml;
 
 import com.github.sebastian4j.spaceship.BytesUtils;
+import com.github.sebastian4j.spaceship.dto.Controller;
 import com.github.sebastian4j.spaceship.dto.FileLoader;
 import com.github.sebastian4j.spaceship.dto.GUIRequest;
 import com.github.sebastian4j.spaceship.dto.HttpMethods;
 import com.github.sebastian4j.spaceship.utils.FXMLUtils;
 import com.github.sebastian4j.spaceship.utils.RequestResponseUtils;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -22,6 +27,9 @@ import java.util.ResourceBundle;
 
 public class RequestTabController implements Initializable, FileLoader {
     private static final System.Logger LOGGER = System.getLogger(RequestTabController.class.getName());
+
+    @FXML
+    private FlowPane a;
 
     @FXML
     private Button addHeader;
@@ -33,10 +41,16 @@ public class RequestTabController implements Initializable, FileLoader {
     private VBox containerHeader;
 
     @FXML
+    private VBox containerHeaderResponse;
+
+    @FXML
     private ComboBox<String> methods;
 
     @FXML
     private TextArea requestbody;
+
+    @FXML
+    private ScrollPane scrollHeaders;
 
     @FXML
     private Button send;
@@ -48,9 +62,26 @@ public class RequestTabController implements Initializable, FileLoader {
     private Tab tab2;
 
     @FXML
+    private Text textFlowPaneResponse;
+
+    @FXML
     private TextField url;
+
+    @FXML
+    private VBox vboxurl;
+
+    @FXML
+    private HBox hboxResponse;
+
+    @FXML
+    private VBox vboxResultResponse;
+
+    @FXML
+    private BorderPane contenedor;
+
     private ResourceBundle rb;
     private File last;
+    private Stage stage;
 
     @FXML
     void addHeader(ActionEvent event) {
@@ -61,13 +92,12 @@ public class RequestTabController implements Initializable, FileLoader {
         HBox hbox = new HBox();
         TextField tfk = new TextField();
         tfk.setMinWidth(280);
-        tfk.setMaxWidth(280);
         if (k != null) {
             tfk.setText(k);
         }
         TextField tfv = new TextField();
         tfv.setMinWidth(410);
-        tfv.setMaxWidth(410);
+        hbox.setAlignment(Pos.CENTER);
         if (v != null) {
             tfv.setText(v);
         }
@@ -84,10 +114,32 @@ public class RequestTabController implements Initializable, FileLoader {
         if (url.getText() != null && !url.getText().isEmpty()) {
             Platform.runLater(() -> {
                 send.setDisable(true);
+                textFlowPaneResponse.setText("");
                 Platform.runLater(() -> {
-                    bodyresult.setText(RequestResponseUtils.sendRequest(
-                                url.getText(), FXMLUtils.headers(containerHeader),
-                                HttpMethods.hasBody(methods.getSelectionModel().getSelectedItem()), requestbody.getText()));
+                    var ini = System.currentTimeMillis();
+                    var result = RequestResponseUtils.sendRequest(
+                            url.getText(), FXMLUtils.headers(containerHeader),
+                            HttpMethods.hasBody(methods.getSelectionModel().getSelectedItem()), requestbody.getText());
+                    var res = System.currentTimeMillis() - ini;
+                    textFlowPaneResponse.setText(res + " " + rb.getString("milis"));
+                    VBox vb = new VBox();
+                    containerHeaderResponse.getChildren().clear();
+                    result.headers().forEach((a, b) -> {
+                        for (var val : b) {
+                            var key = new TextField(a);
+                            key.setMinWidth(300);
+                            var value = new TextField(val);
+                            value.setMinWidth(400);
+                            var hbox = new HBox(key, value);
+                            hbox.setAlignment(Pos.CENTER);
+                            vb.getChildren().add(hbox);
+                        }
+                    });
+                    var sp = new HBox();
+                    sp.setMinHeight(50);
+                    vb.getChildren().add(sp);
+                    containerHeaderResponse.getChildren().add(vb);
+                    bodyresult.setText(result.body());
                     send.setDisable(false);
                 });
             });
@@ -99,6 +151,20 @@ public class RequestTabController implements Initializable, FileLoader {
         this.rb = rb;
         methods.setItems(FXCollections.observableArrayList(HttpMethods.list()));
         methods.getSelectionModel().selectFirst();
+        scrollHeaders.widthProperty().addListener(cl -> {
+            containerHeader.setMinWidth(scrollHeaders.getWidth());
+            containerHeaderResponse.setMinWidth(scrollHeaders.getWidth());
+            this.url.setMinWidth(scrollHeaders.getWidth() - send.getWidth() - methods.getWidth() - 50);
+        });
+        vboxResultResponse.heightProperty().addListener((observableValue, number, t1) -> resize());
+    }
+
+    private void resize() {
+        var height = vboxResultResponse.heightProperty().get() - 40;
+        if (bodyresult.getHeight() == 0) {
+            height = 419; // TODO mejorar el parche
+        }
+        bodyresult.setPrefHeight(height);
     }
 
     @Override
@@ -136,5 +202,10 @@ public class RequestTabController implements Initializable, FileLoader {
                 FXMLUtils.saveFile(last, gui);
             });
         }
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }
