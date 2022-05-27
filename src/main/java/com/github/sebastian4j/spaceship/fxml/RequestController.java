@@ -50,7 +50,7 @@ public class RequestController implements Initializable, Controller {
             fileChooser.setInitialDirectory(last.getParentFile());
         }
         last = fileChooser.showOpenDialog(null);
-        getActiveFileLoader().ifPresent(c -> c.load(last));
+        getActiveFileLoader().ifPresent(c -> c.loadFile(last));
 
     }
 
@@ -89,7 +89,7 @@ public class RequestController implements Initializable, Controller {
             fileChooser.setInitialDirectory(last.getParentFile());
         }
         last = fileChooser.showSaveDialog(null);
-        getActiveFileLoader().ifPresent(c -> c.save(last));
+        getActiveFileLoader().ifPresent(c -> c.saveFile(last));
     }
 
     @FXML
