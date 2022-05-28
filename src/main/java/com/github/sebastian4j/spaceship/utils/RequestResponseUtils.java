@@ -35,7 +35,6 @@ public class RequestResponseUtils {
 
     public RequestResponse sendRequest(final String url, Map<String, String> headers, boolean withBody, final String body) {
         String result = "";
-        int status = -1;
         final var sb = new StringBuilder();
         final var bytes = new AtomicLong();
         String[] statusCode = new String[1];
@@ -66,7 +65,9 @@ public class RequestResponseUtils {
                     hr.putAll(con.getHeaderFields());
                 } catch (Exception e) {
                     sb.delete(0, sb.length());
-                    sb.append(readError());
+                    String error = readError();
+                    sb.append(error);
+                    bytes.set(error.getBytes(StandardCharsets.UTF_8).length);
                     LOGGER.log(System.Logger.Level.ERROR, "error al obtener input stream", e);
                 }
             });

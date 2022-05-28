@@ -133,7 +133,7 @@ public class RequestTabController implements Initializable, FileLoader {
                         textFlowPaneResponse.setText(
                                         rb.getString("milis") + ": " + res +
                                         " bytes: " + result.bytes() +
-                                        " status:" + result.statusCode());
+                                        " status: " + result.statusCode());
                         VBox vb = new VBox();
                         containerHeaderResponse.getChildren().clear();
                         result.headers().forEach((a, b) -> {
