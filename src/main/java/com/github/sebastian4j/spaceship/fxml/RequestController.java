@@ -45,13 +45,20 @@ public class RequestController implements Initializable, Controller {
     void fileOpen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(bundle.getString("file.chooser.open"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(bundle.getString("file.chooser.all.files"), "*.*"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(bundle.getString("file.chooser.all.files"), "*.*"));
         if (last != null) {
             fileChooser.setInitialDirectory(last.getParentFile());
         }
         last = fileChooser.showOpenDialog(null);
         getActiveFileLoader().ifPresent(c -> c.loadFile(last));
+        changeTabName();
+    }
 
+    private void changeTabName() {
+        if (last != null) {
+            getActiveTab().ifPresent(tab -> tab.setText(last.getName()));
+        }
     }
 
     private Optional<FileLoader> getActiveFileLoader() {
@@ -90,11 +97,13 @@ public class RequestController implements Initializable, Controller {
         }
         last = fileChooser.showSaveDialog(null);
         getActiveFileLoader().ifPresent(c -> c.saveFile(last));
+        changeTabName();
     }
 
     @FXML
     void newTab(ActionEvent event) {
         var tab = new Tab();
+        tab.setText(bundle.getString("no.name"));
         tabPane.getTabs().add(tab);
         var contenido =  new FXMLLoader(getClass().getClassLoader().getResource("requestTab.fxml"), bundle);
         try {
@@ -105,14 +114,7 @@ public class RequestController implements Initializable, Controller {
         } catch (Exception e) {
             LOGGER.log(System.Logger.Level.ERROR, "error al cargar tab", e);
         }
-        tabsTitles();
-    }
-
-    private void tabsTitles() {
-        var ai = new AtomicInteger();
-        tabsActivas.forEach((a, b) -> {
-            a.setText("Request: " + ai.incrementAndGet());
-        });
+        tabPane.getSelectionModel().select(tab);
     }
 
     @Override
@@ -135,6 +137,5 @@ public class RequestController implements Initializable, Controller {
             tabsActivas.remove(tab);
             tabPane.getTabs().remove(tab);
         });
-        tabsTitles();
     }
 }

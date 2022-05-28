@@ -130,7 +130,10 @@ public class RequestTabController implements Initializable, FileLoader {
                             HttpMethods.hasBody(methods.getSelectionModel().getSelectedItem()), requestbody.getText());
                     var res = System.currentTimeMillis() - ini;
                     Platform.runLater(() -> {
-                        textFlowPaneResponse.setText(res + " " + rb.getString("milis") + " " + result.bytes() + " bytes");
+                        textFlowPaneResponse.setText(
+                                        rb.getString("milis") + ": " + res +
+                                        " bytes: " + result.bytes() +
+                                        " status:" + result.statusCode());
                         VBox vb = new VBox();
                         containerHeaderResponse.getChildren().clear();
                         result.headers().forEach((a, b) -> {

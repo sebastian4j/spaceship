@@ -35,8 +35,11 @@ public class RequestResponseUtils {
 
     public RequestResponse sendRequest(final String url, Map<String, String> headers, boolean withBody, final String body) {
         String result = "";
+        int status = -1;
         final var sb = new StringBuilder();
         final var bytes = new AtomicLong();
+        String[] statusCode = new String[1];
+        statusCode[0] = "";
         Map<String, List<String>> hr = new HashMap<>();
         try {
             con = (HttpURLConnection) new URL(normalize(url)).openConnection();
@@ -49,6 +52,7 @@ public class RequestResponseUtils {
             thread = new Thread(() -> {
                 try {
                     LOGGER.log(System.Logger.Level.INFO, "leer respuesta en thread");
+                    statusCode[0] = String.valueOf(con.getResponseCode());
                     try (var is = con.getInputStream()) {
                         String res = "";
                         int lee;
@@ -61,6 +65,8 @@ public class RequestResponseUtils {
                     }
                     hr.putAll(con.getHeaderFields());
                 } catch (Exception e) {
+                    sb.delete(0, sb.length());
+                    sb.append(readError());
                     LOGGER.log(System.Logger.Level.ERROR, "error al obtener input stream", e);
                 }
             });
@@ -69,8 +75,24 @@ public class RequestResponseUtils {
             thread.join();
             result = sb.toString();
         } catch (Exception e) {
-            result = e.getMessage();
+            LOGGER.log(System.Logger.Level.ERROR, "error al enviar request", e);
+            result = e.getMessage() + " ~ " + readError();
         }
-        return new RequestResponse(result, hr, bytes.get());
+        return new RequestResponse(result, hr, bytes.get(), statusCode[0]);
+    }
+
+    private String readError() {
+        var sb = new StringBuilder();
+        if (con != null) {
+            try (var is = con.getErrorStream()) {
+                int lee = 0;
+                while ((lee = is.read()) != -1) {
+                    sb.append((char) lee);
+                }
+            } catch (Exception e) {
+                LOGGER.log(System.Logger.Level.ERROR, "error al leer error stream", e);
+            }
+        }
+        return sb.toString();
     }
 }

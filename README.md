@@ -42,3 +42,7 @@ mvn gluonfx:build
 
 ##### Sobre el nombre
 A mi hijo le gustan las cosas relacionadas con el espacio, así que esa es el principal motivo, también sirve como concepto para explicarle cómo viajan y llegan los datos a la aplicación :smiley:
+
+
+### ícono
+el icono lo encontré en: https://www.svgrepo.com/download/148893/rocket.svg
