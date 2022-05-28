@@ -1,6 +1,6 @@
 # Spaceship :rocket:
 
-![v1.1.0](https://github.com/sebastian4j/spaceship/blob/main/images/v1.1.0.png?raw=true)
+![v1.2.1](https://github.com/sebastian4j/spaceship/blob/main/images/v1.2.1.png?raw=true)
 
 - Es una aplicación escrita en Java 17, JavaFX y compilable con GraalVM para una ejecución nativa.
 - Permite hacer peticiones a urls y visualizar la respuesta.
@@ -16,6 +16,7 @@
   - cancelar la petición solicitada
   - guardar el response obtenido
   - ver los milisegundos y bytes transferidos
+  - muestra el código de estado http obtenido
 - Compilar la app:
 
 ```
