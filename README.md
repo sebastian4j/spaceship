@@ -1,6 +1,6 @@
 # Spaceship :rocket:
 
-![v1.2.1](https://github.com/sebastian4j/spaceship/blob/main/images/v1.2.1.png?raw=true)
+![v1.3.0](https://github.com/sebastian4j/spaceship/blob/main/images/v1.2.1.png?raw=true)
 
 - Es una aplicación escrita en Java 17, JavaFX y compilable con GraalVM para una ejecución nativa.
 - Permite hacer peticiones a urls y visualizar la respuesta.
@@ -24,7 +24,7 @@ mvn clean package
 ```
 - Lanzar la app:
 ```
-java --module-path  target/spaceship-1.2.1.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Spaceship
+java --module-path  target/spaceship-1.3.0.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Spaceship
 ```
 - Para compilarlo en forma nativa:
   - descargar graalvm-ce-java17-22.1.0 (me imagino que funciona con versiones posteriores)
