@@ -24,7 +24,7 @@ mvn clean package
 ```
 - Lanzar la app:
 ```
-java --module-path  target/spaceship-1.0.0.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Spaceship
+java --module-path  target/spaceship-1.2.1.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Spaceship
 ```
 - Para compilarlo en forma nativa:
   - descargar graalvm-ce-java17-22.1.0 (me imagino que funciona con versiones posteriores)
