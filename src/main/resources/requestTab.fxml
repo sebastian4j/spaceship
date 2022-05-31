@@ -63,11 +63,6 @@
                <content>
                   <VBox fx:id="vboxResultResponse" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
-                        <TextArea fx:id="bodyresult" editable="false" layoutX="-3.0" layoutY="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </TextArea>
                         <HBox fx:id="hboxResponse" alignment="CENTER_LEFT" maxHeight="35.0" maxWidth="1.7976931348623157E308" minHeight="35.0" prefHeight="35.0" spacing="10.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#saveResponse" text="%save.response" />
@@ -77,6 +72,11 @@
                               <Insets left="10.0" />
                            </padding>
                         </HBox>
+                        <TextArea fx:id="bodyresult" editable="false" layoutX="-3.0" layoutY="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextArea>
                      </children>
                      <padding>
                         <Insets bottom="2.0" />

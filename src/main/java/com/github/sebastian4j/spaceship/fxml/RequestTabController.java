@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 public class RequestTabController implements Initializable, FileLoader {
     private static final System.Logger LOGGER = System.getLogger(RequestTabController.class.getName());
-
     @FXML
     private FlowPane a;
 
@@ -114,8 +113,36 @@ public class RequestTabController implements Initializable, FileLoader {
         hbox.getChildren().add(tfk);
         hbox.getChildren().add(tfv);
         hbox.getChildren().add(del);
+        stage.widthProperty().addListener((observableValue, number, t1) -> {
+            calculateHeaderRequestWidth(tfk, tfv, del);
+        });
         del.setOnAction(ev -> containerHeader.getChildren().remove(hbox));
         containerHeader.getChildren().add(hbox);
+        calculateHeaderRequestWidth(tfk, tfv, del);
+    }
+
+    private void calculateHeaderRequestWidth(TextField tfk, TextField tfv, Button del) {
+        var width = stage.getWidth() - 100;
+        var widthBtn = del.getWidth();
+        if (widthBtn == 0.0){
+            widthBtn = 23; // TODO
+        }
+        var widthKey = width  * 0.3 - widthBtn;
+        var widthVal = width * 0.6;
+        tfk.setMaxWidth(widthKey);
+        tfk.setPrefWidth(widthKey);
+        tfv.setMaxWidth(widthVal);
+        tfv.setPrefWidth(widthVal);
+    }
+
+    private void calculateHeaderResponseWidth(TextField tfk, TextField tfv) {
+        var width = stage.getWidth() - 100;
+        var widthKey = width  * 0.3;
+        var widthVal = width * 0.6;
+        tfk.setMaxWidth(widthKey);
+        tfk.setPrefWidth(widthKey);
+        tfv.setMaxWidth(widthVal);
+        tfv.setPrefWidth(widthVal);
     }
 
     private void sendRequest() {
@@ -145,14 +172,17 @@ public class RequestTabController implements Initializable, FileLoader {
                                 var hbox = new HBox(key, value);
                                 hbox.setAlignment(Pos.CENTER);
                                 vb.getChildren().add(hbox);
+                                calculateHeaderResponseWidth(key, value);
+                                stage.widthProperty().addListener((observableValue, number, t1) ->
+                                    calculateHeaderResponseWidth(key, value)
+                                );
                             }
                         });
                         var sp = new HBox();
-                        sp.setMinHeight(50);
+                        sp.setMinHeight(50); // espacio al final
                         vb.getChildren().add(sp);
                         containerHeaderResponse.getChildren().add(vb);
                         bodyresult.setText(result.body());
-
                     });
                     LOGGER.log(System.Logger.Level.INFO, "request finalizado");
                 } catch (Exception e) {
@@ -223,12 +253,13 @@ public class RequestTabController implements Initializable, FileLoader {
             this.url.setMinWidth(scrollHeaders.getWidth() - send.getWidth() - methods.getWidth() - 50);
         });
         vboxResultResponse.heightProperty().addListener((observableValue, number, t1) -> resize());
+        resize();
     }
 
     private void resize() {
         var height = vboxResultResponse.heightProperty().get() - 40;
         if (bodyresult.getHeight() == 0) {
-            height = 419; // TODO mejorar el parche
+            height = vboxResultResponse.getHeight() - 35; // TODO mejorar el parche
         }
         bodyresult.setPrefHeight(height);
     }
@@ -236,6 +267,7 @@ public class RequestTabController implements Initializable, FileLoader {
     @Override
     public void loadFile(File file) {
         if (file != null) {
+            last = file;
             Platform.runLater(() -> {
                 try {
                     var gui = (GUIRequest) BytesUtils.object(Files.readAllBytes(file.toPath()));
@@ -272,8 +304,14 @@ public class RequestTabController implements Initializable, FileLoader {
     }
 
     @Override
+    public void quickSave() {
+        saveFile(last);
+    }
+
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
+        resize();
     }
 
     @FXML

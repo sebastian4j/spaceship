@@ -20,7 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestController implements Initializable, Controller {
     private static final System.Logger LOGGER = System.getLogger(RequestController.class.getName());
@@ -98,6 +97,11 @@ public class RequestController implements Initializable, Controller {
         last = fileChooser.showSaveDialog(null);
         getActiveFileLoader().ifPresent(c -> c.saveFile(last));
         changeTabName();
+    }
+
+    @FXML
+    void quickSave(ActionEvent event) {
+        getActiveFileLoader().ifPresent(FileLoader::quickSave);
     }
 
     @FXML

@@ -11,6 +11,7 @@
             <Menu mnemonicParsing="false" text="%menu.file">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#newTab" text="%file.new" />
+                  <MenuItem mnemonicParsing="false" onAction="#quickSave" text="%file.quick.save" />
                   <MenuItem mnemonicParsing="false" onAction="#fileSaveAs" text="%file.save.as" />
                   <MenuItem mnemonicParsing="false" onAction="#fileOpen" text="%file.open" />
                   <MenuItem mnemonicParsing="false" onAction="#closeTab" text="%file.close.tab" />
