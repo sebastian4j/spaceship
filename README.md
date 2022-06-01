@@ -1,6 +1,6 @@
 # Spaceship :rocket:
 
-![v1.3.0](https://github.com/sebastian4j/spaceship/blob/main/images/v1.3.0.png?raw=true)
+![v1.4.0](https://github.com/sebastian4j/spaceship/blob/main/images/v1.4.0.png?raw=true)
 
 - Es una aplicación escrita en Java 17, JavaFX y compilable con GraalVM para una ejecución nativa.
 - Permite hacer peticiones a urls y visualizar la respuesta.
@@ -24,7 +24,7 @@ mvn clean package
 ```
 - Lanzar la app:
 ```
-java --module-path  target/spaceship-1.3.0.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Spaceship
+java --module-path  target/spaceship-1.4.0.jar:target/lib/  --module com.github.sebastian4j.spaceship/com.github.sebastian4j.spaceship.Spaceship
 ```
 - Para compilarlo en forma nativa:
   - descargar graalvm-ce-java17-22.1.0 (me imagino que funciona con versiones posteriores)
@@ -40,6 +40,7 @@ mvn gluonfx:build
 ### Enlaces de interés
 - https://openjfx.io/
 - https://www.graalvm.org/
+- el nuevo estilo usado es de: https://github.com/JFXtras/jfxtras-styles
 
 ##### Sobre el nombre
 A mi hijo le gustan las cosas relacionadas con el espacio, así que esa es el principal motivo, también sirve como concepto para explicarle cómo viajan y llegan los datos a la aplicación :smiley:

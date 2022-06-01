@@ -1,6 +1,5 @@
 package com.github.sebastian4j.spaceship.utils;
 
-import com.github.sebastian4j.spaceship.BytesUtils;
 import com.github.sebastian4j.spaceship.dto.GUIRequest;
 import com.github.sebastian4j.spaceship.dto.Header;
 import javafx.scene.Node;

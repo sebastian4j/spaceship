@@ -1,9 +1,9 @@
 package com.github.sebastian4j.spaceship.fxml;
 
-import com.github.sebastian4j.spaceship.BytesUtils;
 import com.github.sebastian4j.spaceship.dto.FileLoader;
 import com.github.sebastian4j.spaceship.dto.GUIRequest;
 import com.github.sebastian4j.spaceship.dto.HttpMethods;
+import com.github.sebastian4j.spaceship.utils.BytesUtils;
 import com.github.sebastian4j.spaceship.utils.FXMLUtils;
 import com.github.sebastian4j.spaceship.utils.RequestResponseUtils;
 import javafx.application.Platform;
@@ -84,6 +84,9 @@ public class RequestTabController implements Initializable, FileLoader {
     @FXML
     private BorderPane contenedor;
 
+    @FXML
+    private TabPane tabsContainer;
+
     private ResourceBundle rb;
     private File last;
     private Stage stage;
@@ -99,13 +102,12 @@ public class RequestTabController implements Initializable, FileLoader {
     private void addHeader(final String k, final String v) {
         HBox hbox = new HBox();
         TextField tfk = new TextField();
-        tfk.setMinWidth(280);
         if (k != null) {
             tfk.setText(k);
         }
         TextField tfv = new TextField();
-        tfv.setMinWidth(410);
         hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(2);
         if (v != null) {
             tfv.setText(v);
         }
@@ -159,8 +161,8 @@ public class RequestTabController implements Initializable, FileLoader {
                     Platform.runLater(() -> {
                         textFlowPaneResponse.setText(
                                         rb.getString("milis") + ": " + res +
-                                        " bytes: " + result.bytes() +
-                                        " status: " + result.statusCode());
+                                        "   bytes: " + result.bytes() +
+                                        "   status: " + result.statusCode());
                         VBox vb = new VBox();
                         containerHeaderResponse.getChildren().clear();
                         result.headers().forEach((a, b) -> {
@@ -170,6 +172,7 @@ public class RequestTabController implements Initializable, FileLoader {
                                 var value = new TextField(val);
                                 value.setMinWidth(400);
                                 var hbox = new HBox(key, value);
+                                hbox.setSpacing(2);
                                 hbox.setAlignment(Pos.CENTER);
                                 vb.getChildren().add(hbox);
                                 calculateHeaderResponseWidth(key, value);
@@ -183,6 +186,7 @@ public class RequestTabController implements Initializable, FileLoader {
                         vb.getChildren().add(sp);
                         containerHeaderResponse.getChildren().add(vb);
                         bodyresult.setText(result.body());
+                        tabsContainer.getSelectionModel().select(tab2);
                     });
                     LOGGER.log(System.Logger.Level.INFO, "request finalizado");
                 } catch (Exception e) {
@@ -257,9 +261,10 @@ public class RequestTabController implements Initializable, FileLoader {
     }
 
     private void resize() {
-        var height = vboxResultResponse.heightProperty().get() - 40;
+        var inicial = 35;
+        var height = vboxResultResponse.heightProperty().get() - inicial;
         if (bodyresult.getHeight() == 0) {
-            height = vboxResultResponse.getHeight() - 35; // TODO mejorar el parche
+            height = vboxResultResponse.getHeight() - inicial; // TODO mejorar el parche
         }
         bodyresult.setPrefHeight(height);
     }

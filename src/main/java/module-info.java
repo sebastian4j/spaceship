@@ -3,6 +3,7 @@ module com.github.sebastian4j.spaceship {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.base;
+    requires org.jfxtras.styles.jmetro;
     exports com.github.sebastian4j.spaceship.fxml;
     opens com.github.sebastian4j.spaceship.fxml;
     exports com.github.sebastian4j.spaceship;

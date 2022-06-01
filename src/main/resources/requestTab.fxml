@@ -14,7 +14,7 @@
             <FlowPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <children>
                   <ComboBox fx:id="methods" prefHeight="24.0" prefWidth="82.0" />
-                  <TextField fx:id="url" minHeight="24.0" minWidth="526.0" />
+                  <TextField fx:id="url" minHeight="24.0" minWidth="526.0" onAction="#sendRequest" />
                   <Button fx:id="send" minHeight="24.0" minWidth="102.0" mnemonicParsing="false" onAction="#sendRequest" text="%url.search" />
                </children>
                <BorderPane.margin>
@@ -28,13 +28,13 @@
       </VBox>
    </top>
    <center>
-      <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabsContainer" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab fx:id="tab1" text="%tab1">
                <content>
                   <AnchorPane>
                      <children>
-                        <TextArea fx:id="requestbody" layoutX="-3.0" layoutY="-7.0" prefHeight="455.0" prefWidth="744.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TextArea fx:id="requestbody" layoutX="-3.0" layoutY="-7.0" prefHeight="455.0" prefWidth="744.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
