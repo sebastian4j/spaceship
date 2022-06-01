@@ -45,6 +45,7 @@ mvn gluonfx:build
 - https://openjfx.io/
 - https://www.graalvm.org/
 - el nuevo estilo usado es de: https://github.com/JFXtras/jfxtras-styles
+- https://docs.gluonhq.com/#_platforms
 
 ##### Sobre el nombre
 A mi hijo le gustan las cosas relacionadas con el espacio, así que esa es el principal motivo, también sirve como concepto para explicarle cómo viajan y llegan los datos a la aplicación :smiley:
