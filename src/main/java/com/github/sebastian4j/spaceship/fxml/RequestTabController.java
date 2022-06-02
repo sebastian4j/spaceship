@@ -30,62 +30,48 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RequestTabController implements Initializable, FileLoader {
     private static final System.Logger LOGGER = System.getLogger(RequestTabController.class.getName());
     @FXML
     private FlowPane a;
-
     @FXML
     private Button addHeader;
-
     @FXML
     private TextArea bodyresult;
-
     @FXML
     private VBox containerHeader;
-
     @FXML
     private VBox containerHeaderResponse;
-
     @FXML
     private ComboBox<String> methods;
-
     @FXML
     private TextArea requestbody;
-
     @FXML
     private ScrollPane scrollHeaders;
-
     @FXML
     private Button send;
-
     @FXML
     private Tab tab1;
-
     @FXML
     private Tab tab2;
-
     @FXML
     private Text textFlowPaneResponse;
-
     @FXML
     private TextField url;
-
     @FXML
     private VBox vboxurl;
-
     @FXML
     private HBox hboxResponse;
-
     @FXML
     private VBox vboxResultResponse;
-
     @FXML
     private BorderPane contenedor;
-
     @FXML
     private TabPane tabsContainer;
+    @FXML
+    private CheckBox onlySave;
 
     private ResourceBundle rb;
     private File last;
@@ -94,6 +80,7 @@ public class RequestTabController implements Initializable, FileLoader {
     private Task<Void> runningTask;
     private Future<?> future;
     private RequestResponseUtils requestResponseUtils = new RequestResponseUtils();
+    private File saveResponse = null;
     @FXML
     void addHeader(ActionEvent event) {
         addHeader(null, null);
@@ -147,48 +134,70 @@ public class RequestTabController implements Initializable, FileLoader {
         tfv.setPrefWidth(widthVal);
     }
 
+    private File fileToSaveRequest() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(rb.getString("file.chooser.save"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(rb.getString("file.chooser.all.files"), "*.*"));
+        return fileChooser.showSaveDialog(null);
+    }
+
     private void sendRequest() {
+        saveResponse = null;
+        var toFile = onlySave.isSelected();
+        var send = new AtomicBoolean(true);
+        if (toFile) {
+            saveResponse = fileToSaveRequest();
+            if (saveResponse == null) {
+                send.set(false);
+                FXMLUtils.showWarningAlert(rb.getString("only.save.error.title"), rb.getString("only.save.error.text"));
+            }
+        }
+
         runningTask = new Task<>() {
             @Override
             protected Void call() {
                 try {
-                    LOGGER.log(System.Logger.Level.INFO, "enviando request");
-                    var ini = System.currentTimeMillis();
-                    var result = requestResponseUtils.sendRequest(
-                            url.getText(), FXMLUtils.headers(containerHeader),
-                            HttpMethods.hasBody(methods.getSelectionModel().getSelectedItem()), requestbody.getText());
-                    var res = System.currentTimeMillis() - ini;
-                    Platform.runLater(() -> {
-                        textFlowPaneResponse.setText(
-                                        rb.getString("milis") + ": " + res +
-                                        "   bytes: " + result.bytes() +
-                                        "   status: " + result.statusCode());
-                        VBox vb = new VBox();
-                        containerHeaderResponse.getChildren().clear();
-                        result.headers().forEach((a, b) -> {
-                            for (var val : b) {
-                                var key = new TextField(a);
-                                key.setMinWidth(300);
-                                var value = new TextField(val);
-                                value.setMinWidth(400);
-                                var hbox = new HBox(key, value);
-                                hbox.setSpacing(2);
-                                hbox.setAlignment(Pos.CENTER);
-                                vb.getChildren().add(hbox);
-                                calculateHeaderResponseWidth(key, value);
-                                stage.widthProperty().addListener((observableValue, number, t1) ->
-                                    calculateHeaderResponseWidth(key, value)
-                                );
-                            }
+                    if (send.get()) {
+                        LOGGER.log(System.Logger.Level.INFO, "enviando request");
+                        var ini = System.currentTimeMillis();
+                        var result = requestResponseUtils.sendRequest(
+                                url.getText(), FXMLUtils.headers(containerHeader),
+                                HttpMethods.hasBody(methods.getSelectionModel().getSelectedItem()), requestbody.getText(),
+                                saveResponse);
+
+                        var res = System.currentTimeMillis() - ini;
+                        Platform.runLater(() -> {
+                            textFlowPaneResponse.setText(
+                                    rb.getString("milis") + ": " + res +
+                                            "   bytes: " + result.bytes() +
+                                            "   status: " + result.statusCode());
+                            VBox vb = new VBox();
+                            containerHeaderResponse.getChildren().clear();
+                            result.headers().forEach((a, b) -> {
+                                for (var val : b) {
+                                    var key = new TextField(a);
+                                    key.setMinWidth(300);
+                                    var value = new TextField(val);
+                                    value.setMinWidth(400);
+                                    var hbox = new HBox(key, value);
+                                    hbox.setSpacing(2);
+                                    hbox.setAlignment(Pos.CENTER);
+                                    vb.getChildren().add(hbox);
+                                    calculateHeaderResponseWidth(key, value);
+                                    stage.widthProperty().addListener((observableValue, number, t1) ->
+                                            calculateHeaderResponseWidth(key, value)
+                                    );
+                                }
+                            });
+                            var sp = new HBox();
+                            sp.setMinHeight(50); // espacio al final
+                            vb.getChildren().add(sp);
+                            containerHeaderResponse.getChildren().add(vb);
+                            bodyresult.setText(result.body());
+                            tabsContainer.getSelectionModel().select(tab2);
                         });
-                        var sp = new HBox();
-                        sp.setMinHeight(50); // espacio al final
-                        vb.getChildren().add(sp);
-                        containerHeaderResponse.getChildren().add(vb);
-                        bodyresult.setText(result.body());
-                        tabsContainer.getSelectionModel().select(tab2);
-                    });
-                    LOGGER.log(System.Logger.Level.INFO, "request finalizado");
+                        LOGGER.log(System.Logger.Level.INFO, "request finalizado");
+                    }
                 } catch (Exception e) {
                     LOGGER.log(System.Logger.Level.ERROR, "error al enviar request", e);
                 }
@@ -254,10 +263,11 @@ public class RequestTabController implements Initializable, FileLoader {
         scrollHeaders.widthProperty().addListener(cl -> {
             containerHeader.setMinWidth(scrollHeaders.getWidth());
             containerHeaderResponse.setMinWidth(scrollHeaders.getWidth());
-            this.url.setMinWidth(scrollHeaders.getWidth() - send.getWidth() - methods.getWidth() - 50);
+            this.url.setMinWidth(scrollHeaders.getWidth() - send.getWidth() - methods.getWidth() - 100);
         });
         vboxResultResponse.heightProperty().addListener((observableValue, number, t1) -> resize());
         resize();
+        onlySave.setTooltip(new Tooltip(rb.getString("only.save")));
     }
 
     private void resize() {

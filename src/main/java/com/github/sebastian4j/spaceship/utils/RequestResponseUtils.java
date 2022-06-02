@@ -2,6 +2,8 @@ package com.github.sebastian4j.spaceship.utils;
 
 import com.github.sebastian4j.spaceship.dto.RequestResponse;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +35,8 @@ public class RequestResponseUtils {
         }
     }
 
-    public RequestResponse sendRequest(final String url, Map<String, String> headers, boolean withBody, final String body) {
+    public RequestResponse sendRequest(final String url, Map<String, String> headers, boolean withBody,
+                                       final String body, File toFile) {
         String result = "";
         final var sb = new StringBuilder();
         final var bytes = new AtomicLong();
@@ -56,11 +59,20 @@ public class RequestResponseUtils {
                         String res = "";
                         int lee;
                         LOGGER.log(System.Logger.Level.INFO, "leyendo en thread");
-                        while ((lee = is.read()) != -1) {
-                            sb.append((char) lee);
+                        if (toFile == null) { // retornar la salida
+                            while ((lee = is.read()) != -1) {
+                                sb.append((char) lee);
+                            }
+                            res = sb.toString();
+                            bytes.set(res.getBytes(StandardCharsets.UTF_8).length);
+                        } else { // guardar en archivo la salida
+                            try (var os = new FileOutputStream(toFile)) {
+                                var br = is.readAllBytes();
+                                os.write(br);
+                                bytes.set(br.length);
+                            }
                         }
-                        res = sb.toString();
-                        bytes.set(res.getBytes(StandardCharsets.UTF_8).length);
+
                     }
                     hr.putAll(con.getHeaderFields());
                 } catch (Exception e) {
@@ -79,7 +91,7 @@ public class RequestResponseUtils {
             LOGGER.log(System.Logger.Level.ERROR, "error al enviar request", e);
             result = e.getMessage() + " ~ " + readError();
         }
-        return new RequestResponse(result, hr, bytes.get(), statusCode[0]);
+        return new RequestResponse(result, hr, bytes.get(), statusCode[0], new byte[]{});
     }
 
     private String readError() {

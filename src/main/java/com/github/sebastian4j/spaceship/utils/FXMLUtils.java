@@ -3,6 +3,7 @@ package com.github.sebastian4j.spaceship.utils;
 import com.github.sebastian4j.spaceship.dto.GUIRequest;
 import com.github.sebastian4j.spaceship.dto.Header;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,5 +68,12 @@ public final class FXMLUtils {
             headers.put(key, value);
         });
         return headers;
+    }
+
+    public static void showWarningAlert(String title, String text) {
+        var alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.show();
     }
 }

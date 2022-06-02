@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <BorderPane fx:id="contenedor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.sebastian4j.spaceship.fxml.RequestTabController">
    <top>
@@ -14,8 +15,13 @@
             <FlowPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                <children>
                   <ComboBox fx:id="methods" prefHeight="24.0" prefWidth="82.0" />
-                  <TextField fx:id="url" minHeight="24.0" minWidth="526.0" onAction="#sendRequest" />
+                  <TextField fx:id="url" minHeight="24.0" minWidth="484.0" onAction="#sendRequest" prefHeight="24.0" prefWidth="484.0" />
                   <Button fx:id="send" minHeight="24.0" minWidth="102.0" mnemonicParsing="false" onAction="#sendRequest" text="%url.search" />
+                  <CheckBox fx:id="onlySave" mnemonicParsing="false" text="%only.save.response" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </CheckBox>
                </children>
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

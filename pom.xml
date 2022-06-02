@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.sebastian4j</groupId>
     <artifactId>spaceship</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
@@ -111,6 +111,7 @@
                         <list>javafx.scene.control.MenuItem</list>
                         <list>impl.jfxtras.styles.jmetro.FluentButtonSkin</list>
                         <list>impl.jfxtras.styles.jmetro.TextFieldSkin</list>
+                        <list>javafx.scene.control.Alert</list>
                         <list>com.github.sebastian4j.spaceship.fxml.RequestController</list>
                         <list>com.github.sebastian4j.spaceship.fxml.RequestTabController</list>
                         <list>com.github.sebastian4j.spaceship.dto.GUIRequest</list>
